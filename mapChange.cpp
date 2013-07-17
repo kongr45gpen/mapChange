@@ -80,7 +80,11 @@ bool mapChange::SlashCommand (int playerID, bz_ApiString command, bz_ApiString m
        bz_sendTextMessagef(BZ_SERVER, playerID, "The current map is %s",cmap.c_str());
        bz_sendTextMessage(BZ_SERVER, playerID, "Other possible maps:");
        for (auto i = mapmap.begin();i != mapmap.end(); i++) {
-		bz_sendTextMessagef(BZ_SERVER, playerID,"* %s", i->first.c_str());
+		const char* message;
+		// Indicate the current map
+		if (i->first == cmap) 	message = "[* %s]";
+		else			message = " * %s";
+		bz_sendTextMessagef(BZ_SERVER, playerID, message, i->first.c_str());
        }
     } else {
        const char* newMap = params->get(0).c_str();
